@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "787d1c6535c2f6cc2cc94af1b73d1735",
+    "content-hash": "48bec10ef4e34231ff82476ccd13d119",
     "packages": [
         {
             "name": "brick/math",
@@ -1034,16 +1034,16 @@
         },
         {
             "name": "kieranfyi/roles-core",
-            "version": "v0.1",
+            "version": "v0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KieranFYI/roles-core.git",
-                "reference": "523079b9662839e3cc605973264a7088f020add6"
+                "reference": "f1ff3d90a897079d89f96cad3c3c8f849b7e4922"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KieranFYI/roles-core/zipball/523079b9662839e3cc605973264a7088f020add6",
-                "reference": "523079b9662839e3cc605973264a7088f020add6",
+                "url": "https://api.github.com/repos/KieranFYI/roles-core/zipball/f1ff3d90a897079d89f96cad3c3c8f849b7e4922",
+                "reference": "f1ff3d90a897079d89f96cad3c3c8f849b7e4922",
                 "shasum": ""
             },
             "require": {
@@ -1076,9 +1076,9 @@
             ],
             "support": {
                 "issues": "https://github.com/KieranFYI/roles-core/issues",
-                "source": "https://github.com/KieranFYI/roles-core/tree/v0.1"
+                "source": "https://github.com/KieranFYI/roles-core/tree/v0.2"
             },
-            "time": "2023-01-02T16:28:54+00:00"
+            "time": "2023-01-02T16:55:38+00:00"
         },
         {
             "name": "laravel/framework",
