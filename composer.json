@@ -1,8 +1,7 @@
 {
     "name": "kieranfyi/admin",
     "type": "project",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "KieranFYI\\Admin\\": "src/"
@@ -12,20 +11,6 @@
         {
             "name": "Kieran",
             "email": "kieran@andersons.bz"
-        }
-    ],
-    "repositories": [
-        {
-            "url": "git@github.com:Kieran-FYI/misc.git",
-            "type": "vcs"
-        },
-        {
-            "url": "git@github.com:Kieran-FYI/logging.git",
-            "type": "vcs"
-        },
-        {
-            "url": "git@github.com:Kieran-FYI/roles.git",
-            "type": "vcs"
         }
     ],
     "extra": {
@@ -41,6 +26,6 @@
     "require": {
         "php": "^8.1",
         "laravel/framework": "^9.19",
-        "kieranfyi/roles-core": "dev-main"
+        "kieranfyi/roles-core": "^0.1"
     }
 }
