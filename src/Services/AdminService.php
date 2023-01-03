@@ -13,7 +13,7 @@ class AdminService
     public static function route(): RouteRegistrar
     {
         return Route::prefix(config('admin.path'))
-            ->middleware('perm:Administrator')
+            ->middleware(['auth', 'perm:Administrator'])
             ->name('admin.');
     }
 }
