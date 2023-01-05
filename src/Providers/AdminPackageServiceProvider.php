@@ -4,6 +4,8 @@ namespace KieranFYI\Admin\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
+use KieranFYI\Admin\Listeners\BuildingMenuListener;
 use KieranFYI\Admin\Listeners\RegisterPermissionListener;
 use KieranFYI\Admin\Listeners\RegisterRolesListener;
 use KieranFYI\Admin\Services\AdminService;
@@ -31,6 +33,7 @@ class AdminPackageServiceProvider extends ServiceProvider
 
         Event::listen(RegisterPermissionEvent::class, RegisterPermissionListener::class);
         Event::listen(RegisterRoleEvent::class, RegisterRolesListener::class);
+        Event::listen(BuildingMenu::class, BuildingMenuListener::class);
 
     }
 }
