@@ -3,8 +3,10 @@
 namespace KieranFYI\Admin\Providers;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
+use KieranFYI\Admin\Events\RegisterAdminNavigationEvent;
 use KieranFYI\Admin\Listeners\BuildingMenuListener;
 use KieranFYI\Admin\Listeners\RegisterPermissionListener;
 use KieranFYI\Admin\Listeners\RegisterRolesListener;
@@ -35,5 +37,16 @@ class AdminPackageServiceProvider extends ServiceProvider
         Event::listen(RegisterRoleEvent::class, RegisterRolesListener::class);
         Event::listen(BuildingMenu::class, BuildingMenuListener::class);
 
+        if (!app()->runningInConsole()) {
+            $executed = false;
+            View::composer('*', function () use (&$executed) {
+                if ($executed) {
+                    return;
+                }
+                $executed = true;
+
+                Event::dispatch(RegisterAdminNavigationEvent::class);
+            });
+        }
     }
 }
