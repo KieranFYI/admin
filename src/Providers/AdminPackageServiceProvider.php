@@ -37,10 +37,8 @@ class AdminPackageServiceProvider extends ServiceProvider
         Event::listen(RegisterRoleEvent::class, RegisterRolesListener::class);
         Event::listen(BuildingMenu::class, BuildingMenuListener::class);
 
-        $this->app->afterResolving('view', function () {
-            View::composer('adminlte::page', function () use (&$executed) {
-                Event::dispatch(RegisterAdminNavigationEvent::class);
-            });
+        View::composer('adminlte::page', function () use (&$executed) {
+            Event::dispatch(RegisterAdminNavigationEvent::class);
         });
     }
 }
