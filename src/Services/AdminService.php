@@ -24,20 +24,16 @@ class AdminService
     }
 
     /**
-     * @param string $text
-     * @param string|null $header
+     * @param string|null $text
      * @return AdminMenu
      */
-    public function menu(string $text, string $header = null): AdminMenu
+    public function header(string $text = null): AdminMenu
     {
-        $header = is_null($header) ? '_default' : ucwords(strtolower($header));
-        if (!isset($this->menus[$header])) {
-            $this->menus[$header] = [];
+        $text = empty($text) ? '_default' : ucwords(strtolower($text));
+        if (!isset($this->menus[$text])) {
+            $this->menus[$text] = new AdminMenu($text);
         }
-
-        $menu = AdminMenu::create($text);
-        $this->menus[$header][] = $menu;
-        return $menu;
+        return $this->menus[$text];
     }
 
     /**

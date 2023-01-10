@@ -2,6 +2,12 @@
 
 namespace KieranFYI\Admin\Services\Menu;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Route;
+use JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter;
+use TypeError;
+
 class AdminMenu
 {
 
@@ -13,7 +19,7 @@ class AdminMenu
     /**
      * @var array
      */
-    private array $submenus = [];
+    private array $menus = [];
 
     /**
      * @param string $text
@@ -27,26 +33,74 @@ class AdminMenu
      * @param string $text
      * @return AdminMenu
      */
-    public static function create(string $text): static
+    public function menu(string $text): static
     {
-        return new static($text);
+        return $this->menus[] = new AdminMenu($text);
     }
 
     /**
-     * @return array
+     * @return array|null
+     * @throws BindingResolutionException
      */
-    public function config(): array
+    public function config(): ?array
     {
-        $config = $this->config;
-        if (!empty($this->submenus)) {
-            $config['submenus'] = [];
-
-            /** @var AdminMenu $submenu */
-            foreach ($this->submenus as $submenu) {
-                $config['submenus'][] = $submenu->config();
-            }
+        /** @var GateFilter $filter */
+        $filter = app()->make(GateFilter::class);
+        $config = $filter->transform($this->config);
+        if (isset($config['restricted'])) {
+            return null;
         }
+
+        if (!empty($this->menus)) {
+            $config = [
+                [
+                    'header' => $config['text']
+                ]
+            ];
+            /** @var AdminMenu $menus */
+            foreach ($this->menus as $menus) {
+                $menuConfig = $menus->config();
+
+                if (is_null($menuConfig)) {
+                    continue;
+                }
+
+                $config[] = $menuConfig;
+            }
+            return count($config) === 1 ? null : $config;
+        }
+
+        if (isset($config['route'])) {
+            $bits = explode('.', $config['route']);
+            array_pop($bits);
+            $config['active'] = isset($config['route']) && Route::is(implode('.', $bits) . '.*');
+        }
+
         return $config;
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function can(string $value): static
+    {
+        $this->config['can'] = $value;
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function model(string $value): static
+    {
+        if (!is_a($value, Model::class, true)) {
+            throw new TypeError(self::class . '::model(): $value must be of type ' . Model::class);
+        }
+
+        $this->config['model'] = $value;
+        return $this;
     }
 
     /**
@@ -144,15 +198,6 @@ class AdminMenu
         return $this;
     }
 
-    /**
-     * @param AdminMenu $menu
-     * @return $this
-     */
-    public function submenu(AdminMenu $menu): static
-    {
-        $this->submenus[] = $menu;
-        return $this;
-    }
 
     /**
      * @param string $value

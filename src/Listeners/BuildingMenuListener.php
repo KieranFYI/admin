@@ -17,21 +17,29 @@ class BuildingMenuListener
      */
     public function handle(BuildingMenu $event): void
     {
-        $menus = Admin::menus();
+        /** @var Collection $menus */
+        $menus = collect(Admin::menus());
 
-        if (isset($menus['_default'])) {
-            $event->menu->add(...$this->config($menus['_default']));
-            unset($menus['_default']);
+        if ($menus->contains('_default')) {
+            $config = $menus->get('_default')->config();
+            if (!is_null($config)) {
+                $event->menu->add(...$config);
+            }
         }
 
-        foreach ($menus as $header => $headerMenus) {
-            $event->menu->add($header);
-            $event->menu->add(...$this->config($headerMenus));
-        }
+        $menus->each(function (AdminMenu $header, string $key) use ($event) {
+            if ($key === '_default') {
+                return;
+            }
+            $config = $header->config();
+            if (!is_null($config)) {
+                $event->menu->add(...$config);
+            }
+        });
     }
 
     /**
-     * @param Collection $menus
+     * @param array $menus
      * @return array
      */
     private function config(array $menus): array
