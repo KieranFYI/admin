@@ -5,6 +5,7 @@ namespace KieranFYI\Admin\Services\Menu;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter;
 use TypeError;
 
@@ -35,7 +36,11 @@ class AdminMenu
      */
     public function menu(string $text): static
     {
-        return $this->menus[] = new AdminMenu($text);
+        $slug = Str::slug($text);
+        if (!isset($this->menus[$slug])) {
+            $this->menus[$slug] = new AdminMenu($text);
+        }
+        return $this->menus[$slug];
     }
 
     /**
@@ -52,11 +57,7 @@ class AdminMenu
         }
 
         if (!empty($this->menus)) {
-            $config = [
-                [
-                    'header' => $config['text']
-                ]
-            ];
+            $submenu = [];
             /** @var AdminMenu $menus */
             foreach ($this->menus as $menus) {
                 $menuConfig = $menus->config();
@@ -65,9 +66,12 @@ class AdminMenu
                     continue;
                 }
 
-                $config[] = $menuConfig;
+                $submenu[] = $menuConfig;
             }
-            return count($config) === 1 ? null : $config;
+
+            if (!empty($submenu)) {
+                $config['submenu'] = $submenu;
+            }
         }
 
         if (isset($config['route'])) {

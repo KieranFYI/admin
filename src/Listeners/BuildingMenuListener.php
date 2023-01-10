@@ -23,7 +23,7 @@ class BuildingMenuListener
         if ($menus->contains('_default')) {
             $config = $menus->get('_default')->config();
             if (!is_null($config)) {
-                $event->menu->add(...$config);
+                $event->menu->add(...$config['submenu']);
             }
         }
 
@@ -33,7 +33,8 @@ class BuildingMenuListener
             }
             $config = $header->config();
             if (!is_null($config)) {
-                $event->menu->add(...$config);
+                $event->menu->add($config['text']);
+                $event->menu->add(...$config['submenu']);
             }
         });
     }
