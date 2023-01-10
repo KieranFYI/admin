@@ -26,8 +26,8 @@ class BuildingMenuListener
                 $event->menu->add(...$config['submenu']);
             }
         }
-
-        $menus->each(function (AdminMenu $header, string $key) use ($event) {
+        $menus->sortKeys()
+            ->each(function (AdminMenu $header, string $key) use ($event) {
             if ($key === '_default') {
                 return;
             }

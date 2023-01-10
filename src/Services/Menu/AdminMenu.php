@@ -57,7 +57,7 @@ class AdminMenu
         }
 
         if (!empty($this->menus)) {
-            $submenu = [];
+            $submenu = collect();
             /** @var AdminMenu $menus */
             foreach ($this->menus as $menus) {
                 $menuConfig = $menus->config();
@@ -66,11 +66,11 @@ class AdminMenu
                     continue;
                 }
 
-                $submenu[] = $menuConfig;
+                $submenu->add($menuConfig);
             }
 
-            if (!empty($submenu)) {
-                $config['submenu'] = $submenu;
+            if ($submenu->isNotEmpty()) {
+                $config['submenu'] = $submenu->sortBy('text');
             }
         }
 
