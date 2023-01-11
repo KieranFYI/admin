@@ -1,0 +1,94 @@
+<template>
+    <div class="form-group row">
+        <label :for="id" v-if="label !== null" class="col-lg-2 text-lg-right">
+            {{ label }}
+        </label>
+        <div class="input-group col-lg-10 flex-column">
+            <div class="form-check" v-for="(text,key,index) in options">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    :id="id + '_' + index"
+                    :name="name"
+                    :value="key"
+                    :checked="hasValue(key)"
+                    :disabled="loading"
+                    @change="update($event.target.checked, key)"
+                />
+                <label class="form-check-label" :for="id + '_' + index">{{ text }}</label>
+            </div>
+
+            <span class="invalid-feedback d-block" role="alert" v-for="error in errors">
+                {{ error }}
+            </span>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    emits: [
+        'updated'
+    ],
+    props: {
+        label: {
+            type: String
+        },
+        name: {
+            type: String,
+            required: true
+        },
+        values: {
+            type: Array
+        },
+        errors: {
+            type: Array
+        },
+        options: {
+            type: Object,
+            required: true,
+        },
+        loading: {
+            type: Boolean
+        }
+    },
+    data() {
+        return {
+            id: null,
+        };
+    },
+    methods: {
+        update(checked, value) {
+            let _values = null;
+            if (this.values === undefined) {
+                _values = [];
+            } else {
+                _values = [
+                    ...this.values
+                ];
+            }
+
+
+            if (checked) {
+                _values.push(value);
+            } else {
+                let index = _values.indexOf(value);
+                if (index > -1) {
+                    _values.splice(index, 1);
+                }
+            }
+
+            this.$emit('updated', this.name, _values);
+        },
+        hasValue(value) {
+            if (this.values === undefined) {
+                return false;
+            }
+            return this.values.includes(value);
+        }
+    },
+    created() {
+        this.id = Math.random().toString(36).replace(/[^a-z]+/g, '');
+    }
+}
+</script>

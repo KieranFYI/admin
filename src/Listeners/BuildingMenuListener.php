@@ -2,6 +2,7 @@
 
 namespace KieranFYI\Admin\Listeners;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Collection;
 use JeroenNoten\LaravelAdminLte\Events\BuildingMenu;
 use KieranFYI\Admin\Facades\Admin;
@@ -14,6 +15,7 @@ class BuildingMenuListener
      *
      * @param BuildingMenu $event
      * @return void
+     * @throws BindingResolutionException
      */
     public function handle(BuildingMenu $event): void
     {
