@@ -22,7 +22,7 @@ class BuildingMenuListener
         /** @var Collection $menus */
         $menus = collect(Admin::menus());
 
-        if ($menus->contains('_default')) {
+        if ($menus->has('_default')) {
             $config = $menus->get('_default')->config();
             if (!is_null($config) && !empty($config['submenu'])) {
                 $event->menu->add(...$config['submenu']);
