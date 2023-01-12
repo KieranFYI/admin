@@ -1,4 +1,7 @@
 <?php
 return [
-    'path' => env('ADMIN_PATH', 'admin')
+    'path' => env('ADMIN_PATH', 'admin'),
+    'middleware' => [
+        'web', 'auth', 'perm:Administrator', 'cacheable'
+    ]
 ];

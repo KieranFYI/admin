@@ -8,6 +8,7 @@
                     size="sm"
                     placeholder="Search"
                     @updated="search"
+                    v-if="search ?? true"
                 />
             </div>
         </div>
@@ -119,6 +120,9 @@ export default {
             required: true
         },
         loading: {
+            type: Boolean
+        },
+        search: {
             type: Boolean
         }
     },
