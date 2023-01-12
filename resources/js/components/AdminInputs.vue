@@ -30,17 +30,6 @@
                      @updated="updateData"
         />
 
-        <input-image v-else-if="input.type === 'image'"
-                     :label="input.label"
-                     :name="input.name"
-                     :value="getValue(input.name)"
-                     :errors="getError(input.name)"
-                     :size="size"
-                     :options="input.options"
-                     :loading="loading"
-                     @updated="updateData"
-        />
-
         <input-text v-else
                     :type="input.type"
                     :label="input.label"
