@@ -4,8 +4,8 @@
         <input-checkbox v-if="input.type === 'checkbox'"
                         :label="input.label"
                         :name="input.name"
-                        :value="getValue(input.name)"
-                        :errors="getError(input.name)"
+                        :value="this.getProp(this.values, input.name)"
+                        :errors="this.getProp(this.errors, input.name)"
                         :loading="loading"
                         @updated="updateData"
         />
@@ -13,8 +13,8 @@
         <input-checkbox-multi v-else-if="input.type === 'checkbox_multi'"
                               :label="input.label"
                               :name="input.name"
-                              :values="getValue(input.name)"
-                              :errors="getError(input.name)"
+                              :values="this.getProp(this.values, input.name)"
+                              :errors="this.getProp(this.errors, input.name)"
                               :options="input.options"
                               :loading="loading"
                               @updated="updateData"
@@ -23,8 +23,8 @@
         <input-radio v-else-if="input.type === 'radio'"
                      :label="input.label"
                      :name="input.name"
-                     :value="getValue(input.name)"
-                     :errors="getError(input.name)"
+                     :value="this.getProp(this.values, input.name)"
+                     :errors="this.getProp(this.errors, input.name)"
                      :options="input.options"
                      :loading="loading"
                      @updated="updateData"
@@ -34,8 +34,8 @@
                     :type="input.type"
                     :label="input.label"
                     :name="input.name"
-                    :value="getValue(input.name)"
-                    :errors="getError(input.name)"
+                    :value="this.getProp(this.values, input.name)"
+                    :errors="this.getProp(this.errors, input.name)"
                     :size="size"
                     :loading="loading"
                     @updated="updateData"
@@ -88,17 +88,13 @@ export default {
             this._values[key] = value;
             this.$emit('updated', this._values, key, name);
         },
-        getValue(name) {
-            if (this.values[name] === undefined) {
-                return undefined;
+        getProp(object, keys, defaultVal) {
+            keys = Array.isArray(keys) ? keys : keys.split('.');
+            object = object[keys[0]];
+            if (object && keys.length > 1) {
+                return this.getProp(object, keys.slice(1), defaultVal);
             }
-            return this.values[name];
-        },
-        getError(name) {
-            if (this.errors[name] === undefined) {
-                return [];
-            }
-            return this.errors[name];
+            return object === undefined ? defaultVal : object;
         }
     }
 }

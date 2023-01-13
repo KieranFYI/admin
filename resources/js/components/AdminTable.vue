@@ -7,7 +7,7 @@
                     name="search"
                     size="sm"
                     placeholder="Search"
-                    @updated="search"
+                    @updated="doSearch"
                     v-if="search ?? true"
                 />
             </div>
@@ -42,10 +42,10 @@
                     <td v-for="(label, column) in columns">
                         <template
                             v-if="typeof label === 'object' && typeof label.type === 'string' && label.type === 'date'">
-                            {{ this.formatDate(row[column]) }}
+                            {{ this.formatDate(this.getProp(row, column, 'Unknown')) }}
                         </template>
                         <template v-else>
-                            {{ row[column] }}
+                            {{ this.getProp(row, column, 'Unknown') }}
                         </template>
                     </td>
                     <td class="text-right">
@@ -132,7 +132,7 @@ export default {
         };
     },
     methods: {
-        search(key, value) {
+        doSearch(key, value) {
             this.searchText = value;
             this.$emit('filter', {
                 search: this.searchText,
@@ -150,9 +150,17 @@ export default {
                 page: parseInt(url.searchParams.get('page')),
             });
         },
-        formatDate: function (date) {
+        formatDate(date) {
             return new Date(date).toLocaleString('sv');
         },
+        getProp(object, keys, defaultVal) {
+            keys = Array.isArray(keys) ? keys : keys.split('.');
+            object = object[keys[0]];
+            if (object && keys.length > 1) {
+                return this.getProp(object, keys.slice(1), defaultVal);
+            }
+            return object === undefined ? defaultVal : object;
+        }
     }
 }
 </script>
