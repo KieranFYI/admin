@@ -8,7 +8,7 @@ use KieranFYI\Admin\Services\Menu\AdminMenu;
 
 /**
  * @method static RouteRegistrar route()
- * @method static AdminMenu header(string $text)
+ * @method static AdminMenu header(string $text = null)
  * @method static array menus()
  */
 class Admin extends Facade
