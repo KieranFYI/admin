@@ -43,4 +43,12 @@ class AdminService
     {
         return $this->menus;
     }
+
+    /**
+     * @return bool
+     */
+    public function isService(): bool
+    {
+        return config('admin.service', false);
+    }
 }
