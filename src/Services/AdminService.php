@@ -22,10 +22,12 @@ class AdminService
             return;
         }
 
-        $route = Route::prefix(config('admin.path'))
+         Route::prefix(config('admin.path'))
             ->middleware(config('admin.middleware'))
-            ->name('admin.');
-        $callback($route);
+            ->name('admin.')
+            ->group(function () use ($callback) {
+                $callback();
+            });
     }
 
     /**
