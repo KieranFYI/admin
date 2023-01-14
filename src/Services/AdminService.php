@@ -16,11 +16,16 @@ class AdminService
     /**
      * @return RouteRegistrar
      */
-    public static function route(): RouteRegistrar
+    public function route($callback): void
     {
-        return Route::prefix(config('admin.path'))
+        if ($this->isService()) {
+            return;
+        }
+
+        $route = Route::prefix(config('admin.path'))
             ->middleware(config('admin.middleware'))
             ->name('admin.');
+        $callback($route);
     }
 
     /**
