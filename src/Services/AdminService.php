@@ -2,7 +2,6 @@
 
 namespace KieranFYI\Admin\Services;
 
-use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Route;
 use KieranFYI\Admin\Services\Menu\AdminMenu;
 
@@ -14,9 +13,10 @@ class AdminService
     private array $menus = [];
 
     /**
-     * @return RouteRegistrar
+     * @param callable $callback
+     * @return void
      */
-    public function route($callback): void
+    public function route(callable $callback): void
     {
         if ($this->isService()) {
             return;

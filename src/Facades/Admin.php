@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 use KieranFYI\Admin\Services\Menu\AdminMenu;
 
 /**
- * @method static RouteRegistrar route()
+ * @method static RouteRegistrar route(callable $callback)
  * @method static AdminMenu header(string $text = null)
  * @method static array menus()
  * @method static bool isService()
