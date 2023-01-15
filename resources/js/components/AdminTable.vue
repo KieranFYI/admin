@@ -2,14 +2,16 @@
     <div class="card">
         <div class="card-header">
             <h1 class="card-title">{{ title }}</h1>
-            <div class="card-tools">
-                <input-text
-                    name="search"
-                    size="sm"
-                    placeholder="Search"
-                    @updated="doSearch"
-                    v-if="search ?? true"
-                />
+            <div class="card-tools d-flex">
+                <slot></slot>
+                <div class="ml-2" v-if="search">
+                    <input-text
+                        name="search"
+                        size="sm"
+                        placeholder="Search"
+                        @updated="doSearch"
+                    />
+                </div>
             </div>
         </div>
         <div class="card-body table-responsive p-0">
@@ -128,7 +130,8 @@ export default {
             type: Boolean
         },
         search: {
-            type: Boolean
+            type: Boolean,
+            default: true
         }
     },
     data() {

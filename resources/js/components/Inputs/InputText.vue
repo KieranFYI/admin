@@ -1,9 +1,15 @@
 <template>
-    <div class="form-group row">
-        <label :for="id" v-if="label !== null" class="col-lg-2 text-lg-right">
+    <div :class="{
+        'form-group': true,
+         row: label !== undefined
+        }">
+        <label :for="id" v-if="label !== undefined" class="col-lg-2 text-lg-right">
             {{ label }}
         </label>
-        <div class="input-group col-lg-10">
+        <div :class="{
+            'input-group': true,
+            'col-lg-10': label !== undefined
+            }">
 
             <textarea v-if="type === 'textarea'"
                       :class="classes"
