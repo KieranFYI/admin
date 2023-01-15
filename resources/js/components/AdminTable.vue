@@ -29,12 +29,17 @@
                 </thead>
                 <tbody>
                 <tr v-if="data.data === null">
-                    <td colspan="5">
+                    <td :colspan="Object.keys(columns).length + 1">
                         <div class="d-flex justify-content-center">
                             <div class="spinner-border text-success" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
+                    </td>
+                </tr>
+                <tr v-else-if="data.data.length === 0">
+                    <td :colspan="Object.keys(columns).length + 1" class="text-center">
+                        No data available
                     </td>
                 </tr>
                 <tr v-for="row in data.data" v-else>
