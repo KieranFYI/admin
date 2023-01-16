@@ -150,15 +150,13 @@
                     </div>
                     <div class="text-muted" v-else>
                         <template v-if="rows !== undefined">
-                            Showing {{ rows.total }} entries
+                            Showing {{ rows.length }} entries
                         </template>
-                        <template v-else-if="data !== undefined">
-                            <template v-if="data.from === 1 && data.to === data.total">
-                                Showing {{ data.length }} entries
-                            </template>
-                            <template v-else>
-                                Showing {{ data.from }} to {{ data.to }} of {{ data.total }} entries
-                            </template>
+                        <template v-else-if="data !== undefined && data.total < data.per_page">
+                            Showing {{ data.total }} entries
+                        </template>
+                        <template v-else-if="data !== undefined && data.from !== null && data.to !== null">
+                            Showing {{ data.from }} to {{ data.to }} of {{ data.total }} entries
                         </template>
                     </div>
                 </div>
