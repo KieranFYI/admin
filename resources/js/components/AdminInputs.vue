@@ -46,15 +46,7 @@
 </template>
 
 <script>
-import InputCheckbox from "./Inputs/InputCheckbox";
-import InputCheckboxMulti from "./Inputs/InputCheckboxMulti";
-import InputRadio from "./Inputs/InputRadio";
-import InputText from "./Inputs/InputText";
-
 export default {
-    components: {
-        InputText, InputCheckbox, InputRadio, InputCheckboxMulti
-    },
     emits: [
         'updated'
     ],
