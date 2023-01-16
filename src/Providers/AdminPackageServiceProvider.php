@@ -27,7 +27,7 @@ class AdminPackageServiceProvider extends ServiceProvider
 
         $this->publishes([
             $root . '/config/admin.php' => config_path('admin.php'),
-        ], 'admin');
+        ], ['admin', 'admin-config', 'config']);
 
         $this->mergeConfigFrom($root . '/config/admin.php', 'admin');
 
