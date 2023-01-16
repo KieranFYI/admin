@@ -36,7 +36,7 @@
                 </tr>
                 </thead>
                 <tbody v-if="rows !== undefined">
-                <tr v-if="rows === null">
+                <tr v-if="rows === null || this.loading">
                     <td :colspan="Object.keys(columns).length + 1">
                         <div class="d-flex justify-content-center">
                             <div class="spinner-border text-success" role="status">
@@ -79,7 +79,7 @@
                 </tr>
                 </tbody>
                 <tbody v-else>
-                <tr v-if="data.data === null">
+                <tr v-if="data.data === null || this.loading">
                     <td :colspan="Object.keys(columns).length + 1">
                         <div class="d-flex justify-content-center">
                             <div class="spinner-border text-success" role="status">
