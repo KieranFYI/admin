@@ -180,12 +180,7 @@
 </template>
 
 <script>
-import InputText from "./Inputs/InputText";
-
 export default {
-    components: {
-        InputText
-    },
     emits: [
         'filter'
     ],
