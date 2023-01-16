@@ -62,7 +62,10 @@
                             </div>
                         </div>
                         <template v-else v-for="action in row.actions" v-if="row.actions">
-                            <a :href="action.url" class="text-primary">
+                            <button type="button" :class="action.class" @click="action.click(row)" v-if="action.click !== undefined" >
+                                <i :class="action.icon"></i>
+                            </button>
+                            <a :href="action.url" class="text-primary" v-else>
                                 <i :class="action.icon"></i>
                             </a>
                         </template>
