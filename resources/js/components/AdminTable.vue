@@ -2,16 +2,14 @@
     <div class="card">
         <div class="card-header" v-if="header && !small">
             <h1 class="card-title">{{ title }}</h1>
-            <div class="card-tools d-flex">
+            <div class="card-tools d-flex admin-tools">
                 <slot></slot>
-                <div class="ml-2" v-if="search">
-                    <input-text
-                        name="search"
-                        size="sm"
-                        placeholder="Search"
-                        @updated="doSearch"
-                    />
-                </div>
+                <input-text
+                    name="search"
+                    size="sm"
+                    placeholder="Search"
+                    @updated="doSearch"
+                />
             </div>
         </div>
         <div class="card-body table-responsive p-0">
@@ -54,10 +52,10 @@
                     <td v-for="(label, column) in columns">
                         <template
                             v-if="typeof label === 'object' && typeof label.type === 'string' && label.type === 'date'">
-                            {{ this.formatDate(this.getProp(row, column, 'Unknown')) }}
+                            {{ this.formatDate(this.getProp(row, column, '-')) }}
                         </template>
                         <template v-else>
-                            {{ this.getProp(row, column, 'Unknown') }}
+                            {{ this.getProp(row, column, '-') }}
                         </template>
                     </td>
                     <td class="text-right">
@@ -114,11 +112,11 @@
 
                     <td v-for="(label, column) in columns">
                         <template
-                            v-if="typeof label === 'object' && typeof label.type === 'string' && label.type === 'date'">
-                            {{ this.formatDate(this.getProp(row, column, 'Unknown')) }}
+                            v-if="typeof label === 'object' && typeof label.type === 'string'">
+                            {{ this.getProp(label.type, row, column, 'Unknown') }}
                         </template>
                         <template v-else>
-                            {{ this.getProp(row, column, 'Unknown') }}
+                            {{ this.getProp('string', row, column, 'Unknown') }}
                         </template>
                     </td>
 
@@ -263,14 +261,29 @@ export default {
         formatDate(date) {
             return new Date(date).toLocaleString('sv');
         },
-        getProp(object, keys, defaultVal) {
+        getProp(type, object, keys, defaultVal) {
             keys = Array.isArray(keys) ? keys : keys.split('.');
             object = object[keys[0]];
             if (object && keys.length > 1) {
                 return this.getProp(object, keys.slice(1), defaultVal);
             }
-            return object === undefined ? defaultVal : object;
+
+            if ((object === undefined || object === null)) {
+                return defaultVal;
+            }
+
+            if (type === 'date') {
+                return this.formatDate(object)
+            }
+            return object;
         }
     }
 }
 </script>
+
+<style>
+.admin-tools > .form-group {
+    padding-left: 0.5rem;
+    margin-bottom: 0;
+}
+</style>
