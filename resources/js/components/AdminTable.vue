@@ -51,11 +51,11 @@
                 <tr v-for="row in rows" v-else>
                     <td v-for="(label, column) in columns">
                         <template
-                            v-if="typeof label === 'object' && typeof label.type === 'string' && label.type === 'date'">
-                            {{ this.formatDate(this.getProp(row, column, '-')) }}
+                            v-if="typeof label === 'object' && typeof label.type === 'string'">
+                            {{ this.getProp(label.type, row, column, 'Unknown') }}
                         </template>
                         <template v-else>
-                            {{ this.getProp(row, column, '-') }}
+                            {{ this.getProp('string', row, column, 'Unknown') }}
                         </template>
                     </td>
                     <td class="text-right">
