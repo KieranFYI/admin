@@ -10,7 +10,7 @@ return [
     ],
     'api' => [
         'enabled' => env('ADMIN_API_ENABLED', true),
-        'path' => env('ADMIN_API_PATH', 'admin'),
+        'path' => env('ADMIN_API_PATH', 'admin/api'),
         'middleware' => [
             'web', 'auth', 'perm:Administrator', 'cacheable'
         ]
