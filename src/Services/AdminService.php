@@ -82,7 +82,7 @@ class AdminService
      */
     public function routeEnabled(): bool
     {
-        return config('admin.route', true);
+        return config('admin.route.enabled', true);
     }
 
     /**
@@ -90,6 +90,6 @@ class AdminService
      */
     public function apiEnabled(): bool
     {
-        return config('admin.api', true);
+        return config('admin.api.enabled', true);
     }
 }
