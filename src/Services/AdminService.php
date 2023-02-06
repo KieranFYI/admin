@@ -18,13 +18,31 @@ class AdminService
      */
     public function route(callable $callback): void
     {
-        if ($this->isService()) {
+        if ($this->isService() || !$this->routeEnabled()) {
             return;
         }
 
-         Route::prefix(config('admin.path'))
-            ->middleware(config('admin.middleware'))
+        Route::prefix(config('admin.route.path'))
+            ->middleware(config('admin.route.middleware'))
             ->name('admin.')
+            ->group(function () use ($callback) {
+                $callback();
+            });
+    }
+
+    /**
+     * @param callable $callback
+     * @return void
+     */
+    public function api(callable $callback): void
+    {
+        if ($this->isService() || !$this->apiEnabled()) {
+            return;
+        }
+
+        Route::prefix(config('admin.api.path'))
+            ->middleware(config('admin.api.middleware'))
+            ->name('admin.api.')
             ->group(function () use ($callback) {
                 $callback();
             });
@@ -57,5 +75,21 @@ class AdminService
     public function isService(): bool
     {
         return config('admin.service', false);
+    }
+
+    /**
+     * @return bool
+     */
+    public function routeEnabled(): bool
+    {
+        return config('admin.route', true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function apiEnabled(): bool
+    {
+        return config('admin.api', true);
     }
 }

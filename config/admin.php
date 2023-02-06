@@ -1,8 +1,18 @@
 <?php
 return [
-    'path' => env('ADMIN_PATH', 'admin'),
     'service' => env('ADMIN_SERVICE', false),
-    'middleware' => [
-        'web', 'auth', 'perm:Administrator', 'cacheable'
-    ]
+    'route' => [
+        'enabled' => env('ADMIN_ROUTE_ENABLED', true),
+        'path' => env('ADMIN_ROUTE_PATH', 'admin'),
+        'middleware' => [
+            'web', 'auth', 'perm:Administrator', 'cacheable'
+        ]
+    ],
+    'api' => [
+        'enabled' => env('ADMIN_API_ENABLED', true),
+        'path' => env('ADMIN_API_PATH', 'admin'),
+        'middleware' => [
+            'web', 'auth', 'perm:Administrator', 'cacheable'
+        ]
+    ],
 ];
