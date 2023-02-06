@@ -21,12 +21,17 @@ use KieranFYI\Admin\Services\Menu\AdminMenu;
 class Admin extends Facade
 {
     /**
+     * @var bool
+     */
+    protected static $cached = true;
+
+    /**
      * Get the registered name of the component.
      *
      * @return string
      */
     protected static function getFacadeAccessor()
     {
-        return 'admin';
+        return AdminService::class;
     }
 }

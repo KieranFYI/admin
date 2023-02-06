@@ -31,8 +31,6 @@ class AdminPackageServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom($root . '/config/admin.php', 'admin');
 
-        $this->app->bind('admin', AdminService::class);
-
         Event::listen(RegisterPermissionEvent::class, RegisterPermissionListener::class);
         Event::listen(RegisterRoleEvent::class, RegisterRolesListener::class);
         Event::listen(BuildingMenu::class, BuildingMenuListener::class);
